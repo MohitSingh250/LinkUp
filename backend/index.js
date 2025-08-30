@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const app = express()
@@ -9,7 +10,7 @@ app.use('/api/v1/users',userRouter)
 
 async function main(){
     
-    await mongoose.connect("mongodb+srv://mscrick01:achievemongodb@cluster0.ovfkuhl.mongodb.net/LinkUp")
+    await mongoose.connect(process.env.mongoUrl)
     app.listen(3000)
 }
 main()

@@ -1,6 +1,8 @@
 const httpStatus = require("http-status")
 const {userModel} = require("../models/user.model.js")
 const jwt = require("json-web-token")
+const {jwt_secret_key}  = require("../config.js")
+
 
 const register = async (req,res)=>{
     const {name,username,password} = req.body
@@ -26,7 +28,17 @@ const register = async (req,res)=>{
 
 }
 
+const login = async (req,res)=>{
+    const {username,password} = req.body
 
+    const existingUser = userModel.findOne({
+        username,
+        password
+    })
+    if(existingUser){
+        const token = jwt.sign()
+    }
+}
 
 module.exports = {
     register,
