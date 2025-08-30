@@ -11,6 +11,6 @@ app.use('/api/v1/users',userRouter)
 async function main(){
     
     await mongoose.connect(process.env.mongoUrl)
-    app.listen(3000)
+    app.listen(4000)
 }
 main()

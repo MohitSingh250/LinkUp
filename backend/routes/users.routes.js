@@ -1,11 +1,13 @@
-import { Router } from "express";
-import { addToHistory, getUserHistory, login, register } from "../controllers/user.controller.js";
-
+const { Router }  =  require("express")
+const { addToHistory, getUserHistory, login, register } = require("../controllers/user.controller.js")
+const {authMiddleWare} = require("../middlewares/authmiddleware.js")
 const userRouter = Router();
 
 userRouter.post("/login", login);
 userRouter.post("/register", register);
-userRouter.post("/add_to_activity", addToHistory);
-userRouter.get("/get_all_activity", getUserHistory);
+userRouter.post("/add_to_activity",authMiddleWare, addToHistory);
+userRouter.get("/get_all_activity",authMiddleWare, getUserHistory);
 
-export default userRouter;
+module.exports = {
+    userRouter
+}
