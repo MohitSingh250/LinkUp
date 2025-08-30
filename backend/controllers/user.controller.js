@@ -30,16 +30,39 @@ const register = async (req,res)=>{
 
 const login = async (req,res)=>{
     const {username,password} = req.body
-
-    const existingUser = userModel.findOne({
+     
+    if (!username || !password) {
+        return res.status(400).json({ message: "Please Provide" })
+    }
+    try{
+        const existingUser = userModel.findOne({
         username,
         password
-    })
+        })
+
     if(existingUser){
-        const token = jwt.sign()
+        const token = jwt.sign({
+            Id: existingUser._id
+        },jwt_secret_key)
+
+        res.json({
+        token
+        })
+        return 
+        }
+    res.status(httpStatus.UNAUTHORIZED).json({
+        message: "Error while logging in"
+    })
+    }catch(e){
+        return res.status(500).json({ message: `Something went wrong ${e}` })
     }
+
 }
+
+
 
 module.exports = {
     register,
+    login,
+    addToHistory
 }
